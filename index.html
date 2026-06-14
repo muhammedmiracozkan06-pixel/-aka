@@ -36,6 +36,11 @@
     let flashInterval;
     let isRunning = false;
 
+    // Doğrudan kendi klasörümüzdeki yerel mp3 dosyasını çağırıyoruz
+    const audio = new Audio('s10.mp3');
+    audio.loop = true;
+    audio.volume = 1.0; 
+
     function toggleFlash() {
         const flashDiv = document.getElementById('flash');
         flashInterval = setInterval(() => {
@@ -47,10 +52,10 @@
         if (isRunning) return;
         isRunning = true;
 
-        // 1. Flaş patlasın
+        // 1. Ekranı çıldırt
         toggleFlash();
 
-        // 2. Titreşim başlasın
+        // 2. S23 Titreşimini başlat
         if (navigator.vibrate) {
             navigator.vibrate([1000, 50, 1000, 50, 1000, 50, 1000]);
             setInterval(() => {
@@ -58,15 +63,11 @@
             }, 2000);
         }
 
-        // 3. GERÇEK GALAXY S10 "OVER THE HORIZON" MP3 LİNKİ
-        const audio = new Audio('https://www.allringtone.com/download/ringtone/samsung-galaxy-s10-over-the-horizon_33355_mp3');
-        audio.loop = true;
-        audio.volume = 1.0; 
-
+        // 3. Müziği patlat
         audio.play().then(() => {
-            console.log("Müzik çalıyor!");
+            console.log("Müzik yerel dosyadan başarıyla başladı!");
             
-            // 4. Müzik başladıktan sonra işlemciyi kastırma döngüsü
+            // 4. Müzik açılınca Snapdragon'ı yorma aşaması
             setTimeout(() => {
                 setInterval(() => {
                     for (let i = 0; i < 4000000; i++) {
